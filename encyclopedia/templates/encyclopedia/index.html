@@ -5,12 +5,22 @@
 {% endblock %}
 
 {% block body %}
-    <h1>All Pages</h1>
 
+    {% if entries %}
+    <h1>All Pages</h1>
     <ul>
         {% for entry in entries %}
             <li>{{ entry }}</li>
         {% endfor %}
     </ul>
+
+    {% elif entry %}
+    <h1>{{ title }}</h1>
+    {{ entry }}
+    
+    {% elif entry != title %}
+    <h1>Така сторінка не знайдена</h1>
+
+    {% endif %}
 
 {% endblock %}
