@@ -1,0 +1,25 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    CREATE
+{% endblock %}
+
+{% block body %}
+
+    <h1>Створити новий допис</h1>
+
+    {{ title }}
+    
+    <form action="../create_md.html", method="POST">
+        <label for="wiki">Створити новий допис:</label><br>
+        
+        <textarea autofocus id="wiki" name="wiki" rows="10" cols="80">
+          Тут повинен бути текст
+          </textarea>
+          <br><br>
+          <input type="submit" value="Зберегти">
+        </form>
+        
+
+
+{% endblock %}

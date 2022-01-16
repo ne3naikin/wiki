@@ -12,6 +12,21 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+
+#    Конфігурація URL-адреси Wiki
+
+# Список `urlpatterns` URL-адрес на вигляд. Щоб отримати додаткові відомості, див.:
+#      https://docs.djangoproject.com/en/3.0/topics/http/urls/
+# Приклади:
+# Функція перегляду
+#      1. Додайте імпорт: from my_app import views
+#      2. Додайте URL-адресу до urlpatterns: path('', views.home, name='home')
+# Погляди на основі класів
+#      1. Додайте імпорт: from other_app.views import Home
+#      2. Додайте URL-адресу urlpatterns: path('', Home.as_view(), name='home')
+# Включаючи інший URLconf
+#      1. Імпортувати функцію include(): from django.urls import include, path
+#      2. Додайте URL-адресу до urlpatterns:  path('blog/', include('blog.urls')) 
 """
 from django.contrib import admin
 from django.urls import include, path

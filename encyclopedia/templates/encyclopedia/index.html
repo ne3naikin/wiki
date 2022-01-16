@@ -13,7 +13,7 @@
             <li><a href="wiki/{{ entry }}">{{ entry }}</a></li>
         {% endfor %}
     </ul>
-
+<!--
     {% elif entry %}
     <h1>{{ title }}</h1>
     {{ entry }}
@@ -21,6 +21,14 @@
     {% elif entry != title %}
     <h1>Така сторінка не знайдена</h1>
 
+    {% endif %}
+
+
+    {% if search %}
+    <h1>Пошук нічого не знайшов</h1>
+    <h2>{{ title }}</h2>
+    {{ search }}
+-->
     {% endif %}
 
 {% endblock %}
