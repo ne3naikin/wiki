@@ -84,5 +84,12 @@ def random_md(request):
 
 def create_md(request):
     return render(request, "encyclopedia/create_md.html", {
-        "title1": 'Тут мій вікі допис'
+        "title_test": 'Тут мій вікі допис',
+        "title": "Створити новий допис"
+    })
+
+def edit_md(request):
+    return render(request, "encyclopedia/edit-md.html", {
+        "title_test": 'Тут редагуємо допис',
+        "title": "Редактор дописів"
     })
