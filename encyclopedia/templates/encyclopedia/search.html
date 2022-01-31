@@ -1,59 +1,14 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    Пошук файлів у Wiki
+    {{ title }}
 {% endblock %}
 
 {% block body %}
-
-    <h1>Пошук нічого не знайшов</h1>
-    <h2>TEST - 1</h2>
-    
-    {% if search %}
-    {{ search }}
-    <br>
-    <p><b>Info:{{ title }}</b></p>
-    
-    {% else %}
-    <p>{{ text_fail }}</p>
-
-    {% endif %}
-
-    <p>Info:{{ info }}</p>
-    <p>Title = request.GET:: {{ info_title }}</p>
-    <p>Search: <a href="../wiki/{{ info_search }}">{{ info_search }}</a></p>
-    <p>Search_f '{{ info_q }}'</p>
-    <p>entries: {{ info_entries }}</p>
-    <p>It's test search in TEST-1: '{{ info_search }}' </p>
-    <p>It's test search_f in entries: '{{ info_search_f }}' </p>
-
-
-    <!--{% if search == True %}
-    <h2> Title: {{ title }}</h2>
-    <h3>search2</h3>
-    <p>search2: <a href="../wiki/{{ search2 }}">{{ search2 }}</a></p>
-    <h3>search_f = request.GET: '{{ search_f }}'</h3>
-    <h3>q - {{ q }}</h3>
-    <h3>entries {{ entries }}</h3>
-    <p>It's test search in TEST2: '{{ search2 }}' </p>
-
-    {% else %}
-    <p>{{ text_fail }}</p>-->
-    
-    <!-- Без двох крапок й косої риси не хотів переходити на wiki/-->
-    <!--{% endif %}   
-    <h3>TEST - 1</h3>
-    {% for search_full in entries %}
+    <p>{{ resume }}</p>
+    <ol>
+    {% for entrySearch in searchList %}
+    <li><a href="../wiki/{{ entrySearch }}">{{ entrySearch }}</a></li>
     {% endfor %}
-    <h2>"entries": entries - {{ entries }}</h2>
-    <h2>"search": search_f - {{ search }}</h2>
-    <h2>"title": request.GET - {{ title }}</h2>
-    <h2>"q": search_f - {{ q }}</h2>
-    
-    {% if q in entries %}
-        <li><a href="../wiki/{{ q }}">{{ q }}</a></li>
-    {% else %}
-        <p>No search, test '{{ q }}' and '{{ test1 }}'</p>
-    {% endif %}-->
-
+    </ol>
 {% endblock %}

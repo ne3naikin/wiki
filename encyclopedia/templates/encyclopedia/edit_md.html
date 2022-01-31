@@ -7,10 +7,13 @@
 {% block body %}
 
     <h1>Створити новий допис</h1>
+    {{ title }}<br><br>
+    {{ content }}
 
     {{ title_test }}
     
     <form action="../edit_md.html", method="POST">
+      {% csrf_token %}
         <label for="title">Введіть назву файлу:</label>
         <br>
         <input type="text" id="title" name="title" value="" autofocus>

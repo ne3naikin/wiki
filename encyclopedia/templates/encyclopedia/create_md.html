@@ -11,12 +11,13 @@
     {{ title_test }}
     
     <form action="../edit_md.html", method="POST">
+        {% csrf_token %}
         <label for="title">Введіть назву файлу:</label>
         <br>
-        <input type="text" id="title" name="title" value="" autofocus>
+        <input type="text" id="title" name="title" value="Назва файлу вікі" autofocus>
         <br><br>
         <label for="content">Створити новий допис:</label><br>        
-        <textarea id="content" name="content" rows="5" cols="10">
+        <textarea id="content" name="content" value="Назва файлу вікі" rows="5" cols="10">
 #Тут повинен бути текст
 
 ТЕСТ 
@@ -28,5 +29,5 @@ __Тест__
         </form>
 
 
-
+    
 {% endblock %}
