@@ -6,26 +6,19 @@
 
 {% block body %}
 
-    <h1>Створити новий допис</h1>
-    {{ title }}<br><br>
-    {{ content }}
-
-    {{ title_test }}
+    <h1>{{ heading }}</h1> 
+    {{ text_heading }}
+    <br>
     
-    <form action="../edit_md.html", method="POST">
+    <form action="../edit_md/", method="POST">
       {% csrf_token %}
-        <label for="title">Введіть назву файлу:</label>
-        <br>
-        <input type="text" id="title" name="title" value="" autofocus>
-        <br><br>
-        <label for="wiki">Створити новий допис:</label><br>        
-        <textarea autofocus id="wiki" name="content" rows="5" cols="80">
-          Тут повинен бути текст
-          </textarea>
-          <br><br>
-          <input type="submit" value="Зберегти">
-        </form>
-
-
+      
+      {{ label_from_title }}     <!-- Назва файлу: -->
+      <h2>{{ form.title.value }}</h2>  <!-- Назва файлу з перемінної - title - value -->
+      <!-- <h2>{{ form.title }}</h2> -->
+      <!-- {{ form }} -->
+      {{ form.content }}<br />
+      <input type="submit" value="Зберегти">
+    </form>
 
 {% endblock %}

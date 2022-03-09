@@ -1,12 +1,21 @@
-from unicodedata import name
+# from unicodedata import name
 from django.shortcuts import render
+from django import forms
 
 from . import util
 import random
 import re
 
+from django import forms # Створюємо форму для створення файлу та його редагування у форматі *.md
+# from django.shortcuts import render
+# from django.http import HttpResponseRedirect
+# from django.urls import reverse
 
-#from Tasks.wiki import encyclopedia
+class NameMdFaleForm(forms.Form):
+    title = forms.CharField(label='Введіть назву файлу', max_length=250, help_text='(не більше 250 сімволів)') # назва файлу - повинна бути
+    content = forms.CharField(label='Створити новий допис', widget=forms.Textarea) # текст допису, або новий, або для редагування
+
+
 
 entries = util.list_entries()
 
@@ -24,10 +33,6 @@ def wiki(request, title): # не впевнений що записав все �
         #"entry": title # Варіант 2 не проканав пуста сторінка контексту нема
     }) # TODO: Почистити від зайвих комінтарів включно з закоментованим кодом
 
-# SearchList = ["yes"] # Тестове "yes"
-#search_f = "Not" # Тестове "Not"
-##search = ""
-# FIX: Поки що ця функція не працює належним чином, тому відклав її на потім
 """
 import re
 
@@ -59,16 +64,12 @@ https://regex101.com/r/aGn8QC/2
 
 """
 def search(request):
-    # FIX: Убрати все зайве з коду
-    # FIX: Навести порядок у search.html 
     searchList = []
     search_find = request.GET.get('q')
     for entry_search in entries:
         if  re.findall("(?i)"+search_find, entry_search):
             searchList.append(entry_search)
-        
-        # FIXME: Додати список пошуку на той випадок коли буде більше одної знахідки
-        # FIXME: Знаходить та записує до списка тільки перше знайдене інші ігнорує
+        # Додав список пошуку на той випадок коли буде більше одної знахідки
     if len(searchList) >= 1 and search_find != '':
         return render(request, "encyclopedia/search.html", {
             "title": 'Пошук дописів у Wiki',
@@ -81,7 +82,7 @@ def search(request):
         "resume": f' У файлах дописів Wiki нічого не знайшлось шоб відповідало запиту "{search_find}"', # resume
     })
 
-    # TODO: Random
+    # TODO: Random a post - Випадковий допис
 
 def random_md(request):
     # integer_entries = len(entries)
@@ -92,32 +93,49 @@ def random_md(request):
         "entry": util.get_entry(entries[random.randint(0, len(entries)-1)]) # Ну так трохи скоротив, але інший, зрозумілий, не видалив - закоментував
     })
 
-# TODO: Create markdown 
-# title = ""
-# content = ""
-# , title, content
+# TODO: Create a post markdown - Створити допис markdown
 def create_md(request):
-    # title = request.POST.get('title')
-    # content = request.POST.get('content')
-    # util.save_entry(title, content)
-    title=request.POST.get('title')
-    # if 'title' in request.POST and 'content' in request.POST:
-    #     util.save_entry(title, content)
-    # if request.method == 'POST':
-    #     title = request.post(name='title')
-    #     content = request.post(name='content')
-    #     util.save_entry(title, content)
+# Три тижня потратив що це знайти та спробвати
+# замінити у файлі create_md.html такі строки коду:
+# <form action="{% url 'edit_md' %}", method="POST"> на 
+# <form action="", method="POST"> и все запрацювало. 
+# А то робив вигляд що не бачить методу 'POST'
+# Знайшов на форумі тут - https://courses.prometheus.org.ua/courses/course-v1:Prometheus+CS50+2021_T1/discussion/forum/2de62297d52cdefe74320fff37fc6c28578a3caa/threads/616b1372bbdbe40db756851b
+    if request.method == 'POST':
+        CreateForm = NameMdFaleForm(request.POST)  
+        # Перевіряємо якщо вірно і це POST записуємо дані у функції util.save_entry(title, content) утілити util.py 
+        if CreateForm.is_valid():
+            title = CreateForm.cleaned_data['title']        # назва файлу
+            content = CreateForm.cleaned_data['content']    # текст вмісту файлу
+            util.save_entry(title, content)                 # зберегаємо все це 
+            # Переходимо до сторінки редагування
+            return render(request,"encyclopedia/edit_md.html", {
+                "label_from_title": 'Назва файлу:',
+                "form_title": title,
+                "form": CreateForm,
+                "heading": 'Редагувати допис',
+                "text_heading": "Вітаю ви щойно створили новій допис та можете його відреагувати."
+            })
+        # Якщо щось не так повертаємо данні сторінки для виправлення 
+        else:
+            return render(request, "encyclopedia/create_md.html", {
+                "form": CreateForm,
+                "title": "Створити новий допис"
+            })
+    # Пуста форма
     return render(request, "encyclopedia/create_md.html", {
-        # "title_test": 'Тут мій вікі допис',
-        "title": "Створити новий допис",
-        "title_test": title,
-        # "content_test": content
-
-    })
+                "form": NameMdFaleForm(),
+                "title": "Створити новий допис",
+            })
 
 def edit_md(request):
     return render(request, "encyclopedia/edit_md.html", {
-        "title_test": 'Тут редагуємо допис',
-        # "title": title, #"Редактор дописів"
+        "label_from_title": 'Назва файлу:',
+        # "form_title": title,
+        # "form": NameMdFaleForm(),
+        "heading": 'Редагувати допис',
+        # "test_title": test_title,
+        # "test_content": test_content,
+        "title": "Редагувати допис"
         # "content": content
     })

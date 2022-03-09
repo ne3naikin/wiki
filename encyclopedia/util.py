@@ -40,6 +40,6 @@ def get_entry(title):
     """
     try:
         f = default_storage.open(f"entries/{title}.md")
-        return f.read().decode("utf-8")
+        return f.read().decode("Windows-1251") # utf-8 чомусь з цим не виводиться  кирилиця, та чого там не працює з'являється помилка
     except FileNotFoundError: 
         return None

@@ -8,26 +8,18 @@
 
     <h1>Створити новий допис</h1>
 
-    {{ title_test }}
-    
-    <form action="../edit_md.html", method="POST">
+    <form action="", method="POST">
         {% csrf_token %}
-        <label for="title">Введіть назву файлу:</label>
-        <br>
-        <input type="text" id="title" name="title" value="Назва файлу вікі" autofocus>
-        <br><br>
-        <label for="content">Створити новий допис:</label><br>        
-        <textarea id="content" name="content" value="Назва файлу вікі" rows="5" cols="10">
-#Тут повинен бути текст
+        
+        {{ form.title.label }}:<br />
+        {{ form.title }}<br />
+        <i>{{ form.title.help_text }}</i>
+        <br />
+        {{ form.content.label }}:<br />
+        {{ form.content.as_textarea }}
+        <!-- {{ form.as_p }} -->
+        <!-- <br /> -->
+    <input type="submit" value="Зберегти">
+    </form>
 
-ТЕСТ 
-_ТЕСТ_
-__Тест__
-          </textarea>
-          <br><br>
-          <input type="submit" value="Зберегти">
-        </form>
-
-
-    
 {% endblock %}
